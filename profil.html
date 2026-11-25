@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d1c">
+<title>Mon profil — Rchat</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#070d1c;--panel:rgba(13,24,49,.74);--line:rgba(196,218,255,.16);--muted:#9eafce;--text:#f4f7ff;--cyan:#76edff;--blue:#7394ff;--violet:#aa8cff;--green:#69e8bd;--gold:#ffd58a;--red:#ff839c;--accent:#76edff;--shadow:0 26px 75px #0006}
+*{box-sizing:border-box}html{min-height:100%;background:#050a17;scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);font:15px/1.6 'DM Sans',sans-serif;background:radial-gradient(ellipse at 12% 5%,#26366d77,transparent 38%),radial-gradient(ellipse at 90% 16%,#12617a44,transparent 35%),linear-gradient(145deg,#070c1b,#0b1530 55%,#080d1c)}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(18px,calc((100% - 1240px)/2));border-bottom:1px solid var(--line);background:#060d20c9;backdrop-filter:blur(24px)}
+.brand{display:flex;align-items:center;gap:11px;font:800 20px Manrope,sans-serif;letter-spacing:-.7px}.mark{width:40px;height:40px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#8ba7ff,#5b75ef 55%,#55d9ed);box-shadow:0 8px 25px #507eff55,inset 0 1px #ffffff88}
+.nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.nav a{padding:9px 12px;border:1px solid transparent;border-radius:12px;color:#b8c7e2;font-size:12px;font-weight:800}.nav a:hover,.nav a.active{color:#fff;background:#819cff20;border-color:#9dbaff25}
+.wrap{width:min(1180px,calc(100% - 32px));margin:34px auto 70px}
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:clamp(24px,4vw,42px);border:1px solid #b5d4ff30;border-radius:28px;background:linear-gradient(125deg,#273e77b8,#151c43c9 58%,#0e3447a8);box-shadow:var(--shadow),inset 0 1px #ffffff20}
+.hero:after{content:"";position:absolute;width:330px;height:330px;right:-100px;top:-190px;border-radius:50%;background:#83aaff22;filter:blur(5px);pointer-events:none}
+.eyebrow{color:var(--cyan);font-size:10px;font-weight:900;letter-spacing:2.3px;text-transform:uppercase}.hero h1{font:800 clamp(30px,5vw,48px)/1.08 Manrope,sans-serif;letter-spacing:-2px;margin:9px 0}.hero p{max-width:650px;color:#c0cde5;margin:0}.hero-tag{padding:10px 14px;border:1px solid #9bcaff40;border-radius:99px;background:#83baff14;color:#dceeff;font-size:11px;font-weight:900;white-space:nowrap}
+.layout{display:grid;grid-template-columns: minmax(0,1.25fr) minmax(290px,.75fr);gap:17px;margin-top:17px;align-items:start}
+.stack{display:grid;gap:17px}.panel{min-width:0;padding:22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#17294bc9,#09152dcf);backdrop-filter:blur(22px);box-shadow:0 18px 55px #0003,inset 0 1px #ffffff0c}
+.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.panel h2{font:800 19px Manrope,sans-serif;letter-spacing:-.6px;margin:0 0 5px}.sub{color:var(--muted);font-size:12px;margin:0;line-height:1.6}
+.cover{height:130px;border:1px solid #ffffff20;border-radius:17px;background:linear-gradient(120deg,#304b86,#20305e 55%,#176076);background-position:center;background-size:cover;position:relative;overflow:hidden}
+.identity{display:flex;align-items:flex-end;gap:15px;margin:-40px 0 17px 18px;position:relative}.avatar{width:88px;height:88px;flex:none;border:4px solid #101d39;border-radius:27px;background:linear-gradient(145deg,#7295ff,#45bed2);display:grid;place-items:center;overflow:hidden;font:900 30px Manrope;box-shadow:0 10px 30px #0006}.avatar img{width:100%;height:100%;object-fit:cover}.identity-text{padding-bottom:6px;min-width:0}.identity-text strong{display:block;font:800 21px Manrope;overflow-wrap:anywhere}.identity-text small{color:var(--muted);font-size:11px}.plus{display:inline-flex;vertical-align:middle;margin-left:5px;padding:3px 7px;border:1px solid #f2d18a66;border-radius:99px;background:#e8bb5b19;color:#ffdfa0;font-size:9px;font-weight:900;letter-spacing:.7px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:block;margin:0 0 6px;color:#c6d4ed;font-size:11px;font-weight:800}.field input,.field textarea,.field select{width:100%;padding:12px 13px;border:1px solid #a9c4ef30;border-radius:12px;background:#050e21b8;color:#f4f7ff;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#76edff99;box-shadow:0 0 0 3px #76edff16}.hint{display:block;color:#8296b8;font-size:10px;margin-top:5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border:1px solid #b6d4ff35;border-radius:12px;background:linear-gradient(110deg,#7394ff,#39b9d5);color:white;font-weight:900;font-size:12px;box-shadow:0 9px 25px #4779ec35}.btn.secondary{background:#ffffff0b;border-color:var(--line);box-shadow:none;color:#e5edff}.btn.danger{background:#9c3e5b2a;border-color:#ff839c55;color:#ffc0cc;box-shadow:none}.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.notice{padding:11px 13px;border:1px solid #84baff2a;border-radius:12px;background:#75a8ff0c;color:#b8cbea;font-size:11px;line-height:1.6;margin-top:12px}.notice.warn{border-color:#f0c76d40;background:#f0c76d0d;color:#e9d6a5}.notice.error{border-color:#ff839c55;color:#ffc1ce;background:#ff839c10}
+.account-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.info{padding:12px;border:1px solid #ffffff12;border-radius:13px;background:#ffffff06;min-width:0}.info small{display:block;color:#8fa4c8;font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.info strong{display:block;margin-top:5px;font-size:12px;overflow-wrap:anywhere}.copy{border:0;background:none;color:var(--cyan);font-size:10px;padding:0;margin-top:5px}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}.swatch{width:29px;height:29px;border:2px solid #ffffff45;border-radius:50%;padding:0;box-shadow:0 4px 12px #0004}.swatch[aria-pressed=true]{outline:2px solid white;outline-offset:3px}
+.preview-card{padding:15px;border:1px solid #ffffff1c;border-radius:16px;background:#ffffff08}.preview-top{height:65px;border-radius:11px;background:linear-gradient(120deg,#253d70,#15284a);margin-bottom:12px}.preview-row{display:flex;align-items:center;gap:10px}.preview-avatar{width:43px;height:43px;border-radius:14px;background:linear-gradient(145deg,#7394ff,#39b9d5);display:grid;place-items:center;font-weight:900}.preview-row strong{font-size:13px}.preview-row small{display:block;color:var(--muted);font-size:10px}
+.locked{opacity:.56}.status-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #8edfc344;border-radius:99px;background:#69e8bd12;color:#aaf3d9;font-size:10px;font-weight:900}
+.toast{position:fixed;z-index:50;bottom:20px;left:50%;transform:translateX(-50%);display:none;max-width:calc(100% - 30px);padding:12px 16px;border:1px solid var(--line);border-radius:13px;background:#122343;color:white;box-shadow:0 12px 35px #0008;font-size:12px}
+footer{width:min(1180px,calc(100% - 32px));margin:0 auto 30px;color:#8092b2;font-size:10px;text-align:center}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.hero{grid-template-columns:1fr}.hero-tag{justify-self:start}}
+@media(max-width:560px){.wrap{margin-top:20px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:17px}.account-grid{grid-template-columns:1fr 1fr}.nav a{padding:7px 9px;font-size:11px}.hero h1{letter-spacing:-1px}.identity{margin-left:8px}.avatar{width:76px;height:76px;border-radius:23px}}
+</style>
+  <link rel="stylesheet" href="rchat-global.css">
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="index.html"><span class="mark">R</span><span>Rchat</span></a>
+ <nav class="nav" aria-label="Navigation principale">
+  <a href="index.html">Accueil</a><a href="chat.html">Chat</a><a href="defis.html">Défis</a><a href="ia.html">IA</a><a href="conversations.html">CODE CHAT</a><a class="active" href="profil.html">Mon profil</a><a href="premium.html">Rchat+</a>
+ </nav>
+</header>
+<main class="wrap">
+ <section class="hero"><div><div class="eyebrow">ESPACE PERSONNEL · RCHAT</div><h1>Ton profil. Ton univers.</h1><p>Retrouve ici ton identité, tes préférences, tes informations de compte et tes avantages Rchat+ au même endroit.</p></div><span class="hero-tag" id="heroStatus">Vérification du compte…</span></section>
+ <section id="loginNotice" class="panel" style="display:none;margin-top:17px"><h2>Connecte-toi pour accéder à ton profil</h2><p class="sub">Ton espace personnel est lié à ton compte Rchat.</p><div class="actions"><a class="btn" href="chat.html">Ouvrir le chat</a></div></section>
+ <div id="profileApp" class="layout" style="display:none">
+  <div class="stack">
+   <section class="panel">
+    <div class="panel-head"><div><h2>Mon identité</h2><p class="sub">Les informations qui représentent ton compte dans Rchat.</p></div><span class="status-pill" id="profileState">● Profil chargé</span></div>
+    <div class="cover" id="coverPreview"></div>
+    <div class="identity"><div class="avatar" id="avatarPreview">R</div><div class="identity-text"><strong id="previewName">Membre Rchat</strong><small id="previewHandle">Ton espace personnel</small></div></div>
+    <div class="fields">
+     <div class="field"><label for="username">Pseudo</label><input id="username" maxlength="24" autocomplete="nickname" placeholder="Ton pseudo"></div>
+     <div class="field"><label for="statusText">Statut personnel</label><input id="statusText" maxlength="70" placeholder="Disponible, en création…"></div>
+     <div class="field full"><label for="bio">Biographie</label><textarea id="bio" maxlength="240" placeholder="Présente-toi en quelques mots…"></textarea><span class="hint">240 caractères maximum.</span></div>
+     <div class="field"><label for="avatarUrl">URL de ta photo de profil</label><input id="avatarUrl" type="url" placeholder="https://…"></div>
+     <div class="field"><label for="bannerUrl">URL de ta couverture</label><input id="bannerUrl" type="url" placeholder="https://…"></div>
+    </div>
+    <div class="actions"><button class="btn" id="saveProfile">Enregistrer mon profil</button><button class="btn secondary" id="resetProfile" type="button">Annuler les changements</button></div>
+    <div class="notice" id="profileNotice">Tes modifications seront enregistrées sur ton compte Rchat.</div>
+   </section>
+   <section class="panel">
+    <div class="panel-head"><div><h2>Personnalisation</h2><p class="sub">Choisis une ambiance et une couleur pour ton identité.</p></div></div>
+    <div class="field"><label>Couleur de ton pseudo</label><div class="swatches" id="swatches">
+     <button class="swatch" data-color="#d9baff" style="background:#d9baff" aria-label="Violet" aria-pressed="true"></button>
+     <button class="swatch" data-color="#78efff" style="background:#78efff" aria-label="Cyan" aria-pressed="false"></button>
+     <button class="swatch" data-color="#9cffd5" style="background:#9cffd5" aria-label="Menthe" aria-pressed="false"></button>
+     <button class="swatch" data-color="#ffd58a" style="background:#ffd58a" aria-label="Or" aria-pressed="false"></button>
+     <button class="swatch" data-color="#ff9fc9" style="background:#ff9fc9" aria-label="Rose" aria-pressed="false"></button>
+     <button class="swatch" data-color="#ffffff" style="background:#ffffff" aria-label="Blanc" aria-pressed="false"></button>
+    </div></div>
+    <div class="field" style="margin-top:16px"><label for="profileTheme">Ambiance du profil</label><select id="profileTheme"><option value="ocean">Océan bleu</option><option value="violet">Violet cosmique</option><option value="aurora">Aurore boréale</option><option value="midnight">Nuit profonde</option></select></div>
+    <div class="preview-card" style="margin-top:15px"><div class="preview-top" id="miniCover"></div><div class="preview-row"><div class="preview-avatar" id="miniAvatar">R</div><div><strong id="miniName">Ton pseudo</strong><small>Aperçu de ton identité Rchat</small></div></div></div>
+    <div class="notice">La couleur et l'ambiance sont enregistrées dans ton profil. Les cadres et effets supplémentaires restent liés aux avantages Rchat+.</div>
+   </section>
+   <section class="panel">
+    <div class="panel-head"><div><h2>Rchat+</h2><p class="sub">Retrouve ton statut Premium et tes options avancées.</p></div><span class="hero-tag" id="plusBadge">Vérification…</span></div>
+    <p class="sub" id="plusInfo">Chargement de tes avantages.</p>
+    <div class="fields" id="plusControls">
+     <div class="field"><label for="avatarFrame">Cadre d'avatar</label><select id="avatarFrame"><option value="none">Aucun</option><option value="glow">Halo lumineux</option><option value="orbit">Orbite</option><option value="gold">Contour doré</option></select></div>
+     <div class="field"><label for="profileEffect">Effet de profil</label><select id="profileEffect"><option value="none">Aucun</option><option value="soft-glow">Lueur douce</option><option value="neon">Néon</option></select></div>
+    </div>
+    <div class="actions"><button class="btn secondary" id="savePlus">Enregistrer les effets Rchat+</button><a class="btn secondary" href="premium.html">Découvrir Rchat+</a></div>
+    <div class="notice warn" id="plusNotice">Les effets avancés nécessitent un accès Rchat+ actif.</div>
+   </section>
+  </div>
+  <aside class="stack">
+   <section class="panel"><div class="panel-head"><div><h2>Informations du compte</h2><p class="sub">Les données associées à ta session.</p></div></div>
+    <div class="account-grid">
+     <div class="info"><small>Adresse e-mail</small><strong id="accountEmail">—</strong></div>
+     <div class="info"><small>Statut</small><strong id="accountStatus">Connecté</strong></div>
+     <div class="info"><small>Création du compte</small><strong id="createdAt">—</strong></div>
+     <div class="info"><small>Dernière connexion</small><strong id="lastLogin">—</strong></div>
+    </div>
+    <div class="info" style="margin-top:9px"><small>Identifiant unique</small><strong id="accountId">—</strong><button class="copy" id="copyId">Copier l'identifiant</button></div>
+    <div class="notice">L'identifiant sert à reconnaître ton compte dans la base Rchat. Ne le confonds pas avec ton mot de passe.</div>
+   </section>
+   <section class="panel"><h2>Sécurité et session</h2><p class="sub">Modifie ton mot de passe ou termine ta session sur cet appareil.</p>
+    <div class="field" style="margin-top:14px"><label for="newPassword">Nouveau mot de passe</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="8 caractères minimum"></div>
+    <div class="field"><label for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Répète le mot de passe"></div>
+    <div class="actions"><button class="btn secondary" id="changePassword">Mettre à jour</button><button class="btn danger" id="logout">Déconnexion</button></div>
+    <div class="notice" id="securityNotice">Le changement de mot de passe utilise la session Supabase actuellement ouverte.</div>
+   </section>
+  </aside>
+ </div>
+</main>
+<footer>Rchat · Espace personnel · Une communauté à partager.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const SUPABASE_URL="https://iqqllfcwdisomsyypeuu.supabase.co";
+const SUPABASE_KEY="sb_publishable_XE9etqdqqg7BmLronBNgTw_1tkHblfk";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+let user=null,profile={},isPlus=false,identity={},currentColor="#d9baff";
+const themes={ocean:["#263f75","#16334b"],violet:["#49316f","#20234d"],aurora:["#1c6262","#25356b"],midnight:["#18243d","#0b1428"]};
+function toast(s){$("toast").textContent=s;$("toast").style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>$("toast").style.display="none",3200)}
+function safeUrl(value){if(!value)return "";try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:""}catch{return ""}}
+function dateText(value){if(!value)return "Non disponible";const d=new Date(value);return Number.isNaN(d.getTime())?"Non disponible":d.toLocaleString("fr-FR",{dateStyle:"medium",timeStyle:"short"})}
+function setColor(color){currentColor=color;$("previewName").style.color=color;$("miniName").style.color=color;document.querySelectorAll(".swatch").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.color===color)))}
+function refreshPreview(){
+ const name=$("username").value.trim()||"Membre Rchat",avatar=safeUrl($("avatarUrl").value),banner=safeUrl($("bannerUrl").value),theme=themes[$("profileTheme").value]||themes.ocean;
+ $("previewName").textContent=name;$("previewHandle").textContent=$("statusText").value.trim()||"Membre Rchat";
+ $("avatarPreview").replaceChildren();if(avatar){const img=new Image();img.src=avatar;img.alt="Photo de profil";img.onerror=()=>{$("avatarPreview").textContent=name.slice(0,1).toUpperCase()};$("avatarPreview").append(img)}else $("avatarPreview").textContent=name.slice(0,1).toUpperCase();
+ $("coverPreview").style.backgroundImage=banner?`linear-gradient(90deg,#06112655,#06112622),url("${banner}")`:`linear-gradient(120deg,${theme[0]},${theme[1]})`;
+ $("miniCover").style.background=`linear-gradient(120deg,${theme[0]},${theme[1]})`;$("miniAvatar").textContent=name.slice(0,1).toUpperCase();$("miniName").textContent=name;setColor(currentColor);
+}
+function fillForm(p){
+ profile=p||{};$("username").value=p.username||"";
+ $("bio").value=p.bio||"";$("statusText").value=p.status_text||"";
+ $("avatarUrl").value=p.avatar_url||"";$("bannerUrl").value=p.banner_url||"";
+ $("profileTheme").value=p.profile_theme||"ocean";currentColor=p.name_color||"#d9baff";refreshPreview();
+}
+async function loadPlus(){
+ const {data,error}=await db.from("rchat3_premium").select("status,expires_at").eq("user_id",user.id).eq("status","active").gt("expires_at",new Date().toISOString()).maybeSingle();
+ if(error){$("plusBadge").textContent="Indisponible";$("plusInfo").textContent="Vérification Premium impossible : "+error.message;return}
+ isPlus=!!data;
+ if(!isPlus){$("plusBadge").textContent="NON ACTIF";$("plusInfo").textContent="Ton compte ne dispose pas d'un accès Rchat+ actif."; $("plusControls").classList.add("locked");$("avatarFrame").disabled=true;$("profileEffect").disabled=true;$("savePlus").disabled=true;$("plusNotice").textContent="Les cadres et effets avancés sont réservés aux membres Rchat+.";return}
+ $("plusBadge").textContent="✦ RCHAT+ ACTIF";$("plusInfo").textContent="Ton accès est actif jusqu'au "+dateText(data.expires_at)+".";
+ const {data:plusIdentity,error:identityError}=await db.from("rchat3_plus_identity").select("name_color,avatar_frame,profile_effect").eq("user_id",user.id).maybeSingle();
+ if(identityError){$("plusNotice").textContent="Lecture des options avancées impossible : "+identityError.message;return}
+ identity=plusIdentity||{};
+ if(identity.name_color){currentColor=identity.name_color;setColor(currentColor);$("previewName").style.color=currentColor;$("miniName").style.color=currentColor;}
+ $("avatarFrame").value=identity.avatar_frame||"none";$("profileEffect").value=identity.profile_effect||"none";$("plusNotice").textContent="Tes options avancées sont disponibles sur ce compte.";
+}
+async function start(){
+ const {data:{session},error}=await db.auth.getSession();
+ if(error){$("heroStatus").textContent="Erreur de session";toast(error.message);return}
+ if(!session){$("heroStatus").textContent="Connexion requise";$("loginNotice").style.display="block";return}
+ user=session.user;$("heroStatus").textContent="● COMPTE CONNECTÉ";$("profileApp").style.display="grid";
+ $("accountEmail").textContent=user.email||"Non disponible";$("accountId").textContent=user.id;
+ $("createdAt").textContent=dateText(user.created_at);$("lastLogin").textContent=dateText(user.last_sign_in_at);
+ const {data:p,error:profileError}=await db.from("rchat3_profiles").select("*").eq("id",user.id).maybeSingle();
+ if(profileError){$("profileNotice").className="notice error";$("profileNotice").textContent="Impossible de lire ton profil : "+profileError.message+" — vérifie que la migration SQL fournie a été exécutée.";return}
+ if(!p){$("profileNotice").className="notice warn";$("profileNotice").textContent="Aucun profil Rchat n'a été trouvé pour ce compte. Connecte-toi d'abord depuis le chat pour initialiser ton profil.";return}
+ fillForm(p);await loadPlus();
+}
+["username","bio","statusText","avatarUrl","bannerUrl","profileTheme"].forEach(id=>$(id).addEventListener("input",refreshPreview));
+$("profileTheme").addEventListener("change",refreshPreview);
+document.querySelectorAll(".swatch").forEach(b=>b.addEventListener("click",()=>setColor(b.dataset.color)));
+$("saveProfile").onclick=async()=>{
+ if(!user)return;
+ const username=$("username").value.trim();
+ if(!username||username.length<2){toast("Le pseudo doit contenir au moins 2 caractères.");return}
+ const avatar=safeUrl($("avatarUrl").value.trim()),banner=safeUrl($("bannerUrl").value.trim());
+ if($("avatarUrl").value.trim()&&!avatar){toast("L'URL de l'avatar doit être une adresse HTTP ou HTTPS valide.");return}
+ if($("bannerUrl").value.trim()&&!banner){toast("L'URL de couverture doit être une adresse HTTP ou HTTPS valide.");return}
+ const payload={username,bio:$("bio").value.trim(),status_text:$("statusText").value.trim(),avatar_url:avatar||null,banner_url:banner||null,profile_theme:$("profileTheme").value,name_color:currentColor};
+ $("saveProfile").disabled=true;
+ const {error}=await db.from("rchat3_profiles").update(payload).eq("id",user.id);
+ $("saveProfile").disabled=false;
+ if(error){$("profileNotice").className="notice error";$("profileNotice").textContent="Enregistrement impossible : "+error.message;return}
+ profile={...profile,...payload};$("profileNotice").className="notice";$("profileNotice").textContent="Profil enregistré. Tes informations sont maintenant associées à ton compte.";toast("Profil mis à jour.");
+};
+$("resetProfile").onclick=()=>{fillForm(profile);toast("Modifications annulées.")};
+$("savePlus").onclick=async()=>{
+ if(!user||!isPlus)return;
+ const payload={user_id:user.id,name_color:currentColor,avatar_frame:$("avatarFrame").value,profile_effect:$("profileEffect").value,updated_at:new Date().toISOString()};
+ $("savePlus").disabled=true;const {error}=await db.from("rchat3_plus_identity").upsert(payload,{onConflict:"user_id"});
+ if(!error){const sync=await db.from("rchat3_profiles").update({name_color:currentColor}).eq("id",user.id);if(sync.error){$("savePlus").disabled=false;toast("Effets enregistrés, mais couleur du profil non synchronisée : "+sync.error.message);return}}
+ $("savePlus").disabled=false;
+ if(error){toast("Enregistrement Rchat+ impossible : "+error.message);return}toast("Personnalisation Rchat+ enregistrée.");
+};
+$("copyId").onclick=async()=>{try{await navigator.clipboard.writeText(user.id);toast("Identifiant copié.")}catch{toast("Copie indisponible sur ce navigateur.")}};
+$("changePassword").onclick=async()=>{
+ const a=$("newPassword").value,b=$("confirmPassword").value;
+ if(a.length<8){toast("Choisis un mot de passe d'au moins 8 caractères.");return}
+ if(a!==b){toast("Les deux mots de passe ne correspondent pas.");return}
+ $("changePassword").disabled=true;const {error}=await db.auth.updateUser({password:a});$("changePassword").disabled=false;
+ if(error){$("securityNotice").className="notice error";$("securityNotice").textContent="Modification refusée : "+error.message;return}
+ $("newPassword").value="";$("confirmPassword").value="";$("securityNotice").className="notice";$("securityNotice").textContent="Mot de passe mis à jour.";toast("Mot de passe modifié.");
+};
+$("logout").onclick=async()=>{const {error}=await db.auth.signOut();if(error){toast(error.message);return}location.href="chat.html"};
+db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT")location.href="chat.html"});
+start();
+</script>
+  <script src="rchat-global.js" defer></script>
+</body></html>

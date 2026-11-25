@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#070b19">
+<meta name="description" content="Rchat — évènements communautaires et questionnaires"><title>Rchat — Évènements</title><link rel="stylesheet" href="rchat-global.css">
+<style>
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 10% 0%,#176c6650,transparent 38%),radial-gradient(ellipse at 90% 10%,#6344a044,transparent 34%),#070b19}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px clamp(14px,3vw,38px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;font-weight:900;font-size:1.12rem}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#67b7ff,#9575ff 65%,#64e2df);font-weight:950}
+.brand small{display:block;color:#9eafd0;font-size:.62rem;letter-spacing:.16em}.nav{display:flex;gap:5px;align-items:center;overflow:auto}.nav a{padding:9px 12px;color:#b9c7e4;font-size:.86rem;text-decoration:none;border-radius:999px}
+.wrap{width:min(1100px,calc(100% - 30px));margin:34px auto 70px}.hero{padding:30px 0 25px}.eyebrow{color:#75e5d0;font-weight:850;font-size:.76rem;letter-spacing:.16em}.hero h1{font-size:clamp(2.1rem,5vw,3.8rem);line-height:1.02;letter-spacing:-.06em;margin:12px 0}.hero p{color:#a7b5d2;max-width:650px;line-height:1.7}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:17px}.panel{border:1px solid var(--rchat-line);border-radius:23px;background:rgba(15,25,52,.76);backdrop-filter:blur(18px);padding:22px;box-shadow:var(--rchat-shadow)}
+.panel h2{margin:0 0 7px;font-size:1.18rem}.muted{color:#a7b5d2}.event{padding:16px;border:1px solid #b9caff20;border-radius:17px;background:#ffffff08;margin-top:14px}.event-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.tag{font-size:.72rem;padding:5px 9px;border-radius:999px;background:#5fe0c21a;color:#83ead2;border:1px solid #5fe0c233}
+label{display:block;color:#cbd8f4;font-size:.88rem;font-weight:700;margin:16px 0 7px}input,textarea,select{width:100%;border:1px solid var(--rchat-line);border-radius:13px;background:#080f23;color:#fff;padding:12px 13px}textarea{min-height:80px;resize:vertical}
+.option{display:flex;align-items:center;gap:10px;margin:9px 0;padding:11px;border:1px solid #b9caff20;border-radius:13px;background:#ffffff06}.option input{width:auto}
+.btn{border:0;border-radius:13px;padding:12px 17px;background:linear-gradient(110deg,#438fff,#8b70ff);color:#fff;font-weight:850;cursor:pointer}.btn.secondary{background:#ffffff10;border:1px solid var(--rchat-line)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.notice{border:1px solid #82b5ff30;background:#82b5ff0d;border-radius:14px;padding:12px;color:#b9c9e8;font-size:.82rem;line-height:1.55;margin-top:14px}
+.empty{padding:22px;border:1px dashed #9eb8e744;border-radius:17px;color:#a7b5d2;margin-top:15px;text-align:center}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{width:100%;order:3}.panel{padding:17px}}
+</style></head><body>
+<header class="top"><a class="brand" href="index.html"><span class="mark">R</span><span>Rchat<small>COMMUNITY SPACE</small></span></a>
+<nav class="nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="chat.html">Chat</a><a class="active" href="evenements.html">Évènements</a><a href="defis.html">Défis</a><a href="ia.html">IA</a><a href="conversations.html">CODE CHAT</a><a href="profil.html">Profil</a><a href="premium.html">Rchat+</a></nav></header>
+<main class="wrap"><section class="hero"><div class="eyebrow">LA VIE DE LA COMMUNAUTÉ</div><h1>Les évènements <span style="background:linear-gradient(100deg,#75e8d7,#8db8ff,#b49aff);background-clip:text;color:transparent">Rchat</span></h1><p>Retrouve les activités, réponds aux questionnaires et découvre les prochains rendez-vous de la communauté.</p></section>
+<div class="grid"><section class="panel"><h2>📅 Évènements à découvrir</h2><p class="muted">Les activités publiées apparaîtront dans cet espace.</p><div id="eventList"><div class="empty">Aucun évènement n’est encore affiché. Les évènements devront être publiés depuis le module de gestion connecté.</div></div>
+<div class="notice">Cette page fournit l’interface et le questionnaire de démonstration. La publication commune, les réponses persistantes et les résultats nécessitent le raccordement à tes tables Supabase d’évènements.</div></section>
+<aside class="panel"><h2>📝 Aperçu du QCM</h2><p class="muted">Exemple de questionnaire communautaire.</p>
+<form id="quiz"><label for="nickname">Ton pseudo</label><input id="nickname" maxlength="30" placeholder="Ton pseudo" required>
+<p style="font-weight:750;margin:19px 0 8px">Quel type d’évènement aimerais-tu retrouver sur Rchat ?</p>
+<label class="option"><input type="radio" name="choice" value="Jeux et défis" required> Jeux et défis</label>
+<label class="option"><input type="radio" name="choice" value="Création et partage"> Création et partage</label>
+<label class="option"><input type="radio" name="choice" value="Discussions communautaires"> Discussions communautaires</label>
+<label class="option"><input type="radio" name="choice" value="Quiz et concours"> Quiz et concours</label>
+<div class="actions"><button class="btn" type="submit">Valider ma réponse</button><button class="btn secondary" type="reset">Effacer</button></div>
+<div id="result" class="notice" role="status" hidden></div></form></aside></div></main>
+<script src="rchat-global.js"></script><script>
+document.getElementById('quiz').addEventListener('submit',function(e){e.preventDefault();const name=document.getElementById('nickname').value.trim();const choice=document.querySelector('input[name="choice"]:checked');if(!name||!choice)return;const result=document.getElementById('result');result.hidden=false;result.textContent='Merci '+name+' ! Ta réponse « '+choice.value+' » a été prise en compte dans cet aperçu. Elle n’est pas encore enregistrée sur le serveur.';});
+</script></body></html>

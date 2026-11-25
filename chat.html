@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b19"><meta name="description" content="Rchat — espace de discussion">
+<title>Rchat — Chat</title>
+<link rel="stylesheet" href="rchat-global.css">
+<style>
+:root{--accent:#78aaff}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#244b8a55,transparent 38%),radial-gradient(ellipse at 90% 20%,#6644a044,transparent 34%),#070b19}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px clamp(14px,3vw,38px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;font-weight:900;font-size:1.12rem}
+.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#67b7ff,#9575ff 65%,#64e2df);font-weight:950;color:#fff}
+.brand small{display:block;color:#9eafd0;font-size:.62rem;letter-spacing:.16em}
+.nav{display:flex;gap:5px;align-items:center;overflow:auto}
+.nav a{padding:9px 12px;color:#b9c7e4;font-size:.86rem}
+.wrap{width:min(1180px,calc(100% - 30px));margin:28px auto}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px;flex-wrap:wrap}
+h1{font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:-.05em;margin:0}
+.muted{color:var(--rchat-muted)}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;min-height:650px}
+.panel{border:1px solid var(--rchat-line);border-radius:22px;background:rgba(15,25,52,.76);backdrop-filter:blur(18px);box-shadow:var(--rchat-shadow);overflow:hidden}
+.side{padding:17px}
+.side h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;color:#a9b9dc;margin:3px 0 14px}
+.room{display:flex;align-items:center;gap:11px;padding:12px;border-radius:14px;color:#dce7ff;text-decoration:none;background:#ffffff08;margin:6px 0}
+.room.active{background:linear-gradient(110deg,#528de933,#9675ef2b);border:1px solid #8eafff38}
+.room-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#7caaff20}
+.chatbox{display:flex;flex-direction:column;min-width:0}
+.chat-head{padding:17px 20px;border-bottom:1px solid var(--rchat-line);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.chat-head strong{font-size:1.02rem}.online{font-size:.78rem;color:#79e2bf}
+.messages{padding:22px;display:flex;flex-direction:column;gap:15px;flex:1;min-height:380px}
+.notice{align-self:center;padding:8px 12px;border:1px solid var(--rchat-line);border-radius:999px;color:#aab9d8;font-size:.75rem;text-align:center}
+.msg{max-width:min(75%,620px);padding:12px 15px;border:1px solid #b7caff20;border-radius:17px 17px 17px 5px;background:#ffffff09}
+.msg.mine{align-self:flex-end;background:linear-gradient(135deg,#477fcf55,#8065d855);border-radius:17px 17px 5px 17px}
+.meta{font-size:.72rem;color:#aab9d8;margin-bottom:5px}.msg p{margin:0;line-height:1.5;overflow-wrap:anywhere}
+.composer{padding:14px;border-top:1px solid var(--rchat-line);display:flex;gap:10px}
+.composer input{flex:1;min-width:0;border:1px solid var(--rchat-line);background:#080f23;color:#fff;border-radius:14px;padding:13px 15px}
+.btn{border:0;border-radius:14px;padding:0 19px;background:linear-gradient(110deg,#438fff,#8b70ff);color:white;font-weight:800}
+.helper{font-size:.76rem;color:#8f9fbe;margin:12px 3px 0}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.side{display:flex;gap:7px;overflow:auto;padding:10px}.side h2{display:none}.room{white-space:nowrap;margin:0}.messages{min-height:340px;padding:15px}.msg{max-width:90%}.nav{width:100%;order:3}}
+</style></head>
+<body>
+<header class="top">
+<a class="brand" href="index.html"><span class="mark">R</span><span>Rchat<small>COMMUNITY SPACE</small></span></a>
+<nav class="nav" aria-label="Navigation principale">
+<a href="index.html">Accueil</a><a class="active" href="chat.html">Chat</a><a href="evenements.html">Évènements</a><a href="defis.html">Défis</a><a href="ia.html">IA</a><a href="conversations.html">CODE CHAT</a><a href="profil.html">Profil</a><a href="premium.html">Rchat+</a>
+</nav></header>
+<main class="wrap">
+<div class="heading"><div><div class="muted">TON ESPACE COMMUNAUTAIRE</div><h1>Le salon <span style="color:#91baff">Rchat</span></h1><p class="muted">Retrouve les discussions et les espaces de la communauté.</p></div><span class="online">● Interface prête</span></div>
+<div class="layout">
+<aside class="panel side"><h2>Espaces</h2>
+<a class="room active" href="#general"><span class="room-icon">💬</span><span><b>Général</b><small class="muted" style="display:block">Salon principal</small></span></a>
+<a class="room" href="conversations.html"><span class="room-icon">🔒</span><span><b>Privé</b><small class="muted" style="display:block">Conversations</small></span></a>
+<a class="room" href="evenements.html"><span class="room-icon">📅</span><span><b>Évènements</b><small class="muted" style="display:block">QCM et activités</small></span></a>
+<a class="room" href="defis.html"><span class="room-icon">🏆</span><span><b>Défis</b><small class="muted" style="display:block">Défis communautaires</small></span></a>
+</aside>
+<section class="panel chatbox" id="general">
+<div class="chat-head"><div><strong>💬 Salon général</strong><div class="muted" style="font-size:.78rem">Un espace pour échanger</div></div><span class="online">● En ligne</span></div>
+<div class="messages" id="messages" aria-live="polite">
+<div class="notice">Bienvenue dans le salon général de Rchat</div>
+<div class="msg"><div class="meta">Rchat · Message d’accueil</div><p>Bienvenue ! L’interface du salon est prête. La connexion au service de discussion doit être raccordée pour activer les messages partagés entre les membres.</p></div>
+<div class="msg mine"><div class="meta">Aperçu local</div><p>Tu peux tester la présentation du composeur ci-dessous.</p></div>
+</div>
+<form class="composer" id="composer"><input id="messageInput" maxlength="1500" autocomplete="off" placeholder="Écris un message…" aria-label="Écris un message"><button class="btn" type="submit">Envoyer</button></form>
+</section></div>
+<p class="helper">Mode aperçu : les messages saisis ici restent uniquement dans cette page. Aucune donnée n’est envoyée à Supabase tant que le module de chat d’origine et ses règles de sécurité ne sont pas raccordés.</p>
+</main>
+<script src="rchat-global.js"></script>
+<script>
+document.getElementById('composer').addEventListener('submit',function(e){e.preventDefault();const input=document.getElementById('messageInput');const value=input.value.trim();if(!value)return;const item=document.createElement('div');item.className='msg mine';const meta=document.createElement('div');meta.className='meta';meta.textContent='Aperçu local · maintenant';const p=document.createElement('p');p.textContent=value;item.append(meta,p);document.getElementById('messages').append(item);input.value='';item.scrollIntoView({behavior:'smooth',block:'nearest'});});
+</script></body></html>

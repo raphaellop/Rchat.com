@@ -1,0 +1,44 @@
+/* RCHAT — DESIGN SYSTEM GLOBAL 4.0 */
+:root{
+ --rchat-bg:#070b19;--rchat-bg-soft:#0b1230;--rchat-surface:rgba(16,26,53,.76);
+ --rchat-surface-strong:rgba(18,30,62,.94);--rchat-line:rgba(174,198,255,.16);
+ --rchat-text:#f4f7ff;--rchat-muted:#a7b5d2;--rchat-blue:#78aaff;
+ --rchat-cyan:#72e7ed;--rchat-violet:#a88cff;--rchat-gold:#ffd77b;
+ --rchat-radius:22px;--rchat-radius-sm:14px;--rchat-shadow:0 22px 65px rgba(0,0,0,.30);
+ --rchat-ease:cubic-bezier(.2,.75,.25,1);
+ color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{color:var(--rchat-text);background-color:var(--rchat-bg);font-family:Inter,"DM Sans",Manrope,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(120,170,255,.32);color:#fff}
+button,input,textarea,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{transition:color .2s var(--rchat-ease),background .2s var(--rchat-ease),border-color .2s var(--rchat-ease),transform .2s var(--rchat-ease)}
+button{transition:background .2s var(--rchat-ease),border-color .2s var(--rchat-ease),box-shadow .2s var(--rchat-ease),transform .2s var(--rchat-ease)}
+:focus-visible{outline:2px solid var(--rchat-cyan)!important;outline-offset:3px}
+/* Shared navigation shell */
+body>header,body>header.top,body>header.site-header,body>header.topbar{position:sticky;top:0;z-index:1000;backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%);border-bottom:1px solid var(--rchat-line);background:rgba(7,11,25,.78);box-shadow:0 8px 32px rgba(0,0,0,.12)}
+body>header nav,body>header .nav,body>header .primary-nav,body>header .header-inner{scrollbar-width:none}
+body>header nav::-webkit-scrollbar,body>header .nav::-webkit-scrollbar,body>header .primary-nav::-webkit-scrollbar{display:none}
+body>header .nav a,body>header .primary-nav a,body>header .nav-links a{border-radius:999px;text-decoration:none}
+body>header .nav a:hover,body>header .primary-nav a:hover,body>header .nav-links a:hover{color:#fff;background:rgba(120,170,255,.12)}
+body>header .nav a.active,body>header .primary-nav a.active,body>header .nav a[aria-current="page"],body>header .primary-nav a[aria-current="page"]{color:#fff;background:linear-gradient(110deg,rgba(104,157,255,.23),rgba(168,140,255,.18));border:1px solid rgba(151,184,255,.24)}
+.brand,.brand-word{letter-spacing:-.035em}
+.brand-mark,.mark,.logo{box-shadow:0 0 28px rgba(110,160,255,.22)}
+/* Unified surfaces and controls */
+.card,.panel,.glass,.app-card,.feature-card,.stat-card,.profile-card,.challenge-card,.premium-card,.admin-card,.message-card,.section-card{border-color:var(--rchat-line)}
+button,.btn,.nav-cta,.install-btn,.logout{cursor:pointer}
+button:not(:disabled):hover,.btn:hover,.nav-cta:hover,.install-btn:hover{filter:brightness(1.08)}
+button:disabled{cursor:not-allowed;opacity:.55}
+input,textarea,select{accent-color:var(--rchat-blue)}
+input:not([type=checkbox]):not([type=radio]),textarea,select{max-width:100%}
+img,video,canvas,svg{max-width:100%}
+main{min-width:0}
+/* Motion kept subtle and GPU-friendly */
+@media(prefers-reduced-motion:no-preference){body.rchat-enter{animation:rchatEnter .38s var(--rchat-ease) both}a,button,.card,.panel,.app-card{will-change:auto}}
+@keyframes rchatEnter{from{opacity:.72;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+/* Tablet and mobile */
+@media(max-width:900px){body>header .nav,body>header .primary-nav,body>header .nav-links{max-width:100%;overflow-x:auto;white-space:nowrap;overscroll-behavior-x:contain;scrollbar-width:none}body>header .nav::-webkit-scrollbar,body>header .primary-nav::-webkit-scrollbar{display:none}}
+@media(max-width:640px){html{scroll-padding-top:78px}body>header{padding-left:12px;padding-right:12px}body>header .nav a,body>header .primary-nav a{font-size:.82rem;padding:9px 11px}main{width:100%;max-width:100%}button,.btn{touch-action:manipulation}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
